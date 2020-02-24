@@ -3,8 +3,23 @@ import torch
 import torch.optim as optim
 import numpy as np
 import time
-from data import load_data_batch_v1, load_data_batch_v2, load_data_batch_v2_weights, shuffle_tensor
-from model import Params, JointRecNet_v3, JointRecNet_v2, JointRecNet, JointRecNet_batch, JointRecNet_v2_big, JointRecNet_big
+from model import (
+	Params,
+	JointRecNet_v3,
+	JointRecNet_v2,
+	JointRecNet,
+	JointRecNet_batch,
+	JointRecNet_v2_big,
+	JointRecNet_big
+)
+from data import (
+	shuffle_tensor,
+	extract_pts2d, 
+	normalize_pts_to_frame, 
+	load_data_batch_v1, 
+	load_data_batch_v2, 
+	load_data_batch_v3
+)
 from visualization import draw_skeleton_3d
 
 # create_model = JointRecNet_v3.create_model
@@ -73,7 +88,7 @@ def train():
 		print("[EPOCH]: %i, [LOSS]: %.6f" % (ei, loss.item()))
 
 	# Save model:
-	model_path = '/home/darkalert/KazendiJob/DLab/net-reconstruction-3d/models/last_model_v2_' + str(loss.item())+ '.pth'
+	model_path = '/home/darkalert/KazendiJob/DLab/multi-view-pose-3d/models/last_model_v2_' + str(loss.item())+ '.pth'
 	torch.save(model.state_dict(), model_path)
 	print ('Model has been saved to ', model_path)
 
@@ -148,7 +163,7 @@ def train_batch(batch_size=100):
 		scheduler.step()
 
 	# Save model:
-	model_path = '/home/darkalert/KazendiJob/DLab/net-reconstruction-3d/models/v2-big-norm-weighted-mse' + str(loss.item())+ '.pth'
+	model_path = '/home/darkalert/KazendiJob/DLab/multi-view-pose-3d/models/v2-big-norm-weighted-mse' + str(loss.item())+ '.pth'
 	torch.save(model.state_dict(), model_path)
 	print ('Model has been saved to ', model_path)
 
@@ -240,7 +255,7 @@ def train_weighted(batch_size=100):
 		scheduler.step()
 
 	# Save model:
-	model_path = '/home/darkalert/KazendiJob/DLab/net-reconstruction-3d/models/v2-big-norm-weighted-mse' + str(loss.item())+ '.pth'
+	model_path = '/home/darkalert/KazendiJob/DLab/multi-view-pose-3d/models/v2-big-norm-weighted-mse' + str(loss.item())+ '.pth'
 	torch.save(model.state_dict(), model_path)
 	print ('Model has been saved to ', model_path)
 

@@ -3,10 +3,35 @@ import torch
 import torch.optim as optim
 import numpy as np
 import cv2
-from model import Params, JointRecNet_v3, JointRecNet_v2, JointRecNet, JointRecNet_batch, JointRecNet_v2_big, JointRecNet_big
-from visualization import draw_skeleton_3d, draw_skeleton_2d, draw_skeleton_3d_dynamic, generate_fibonacci_sphere, transform_sphere, draw_skeleton_3d_with_sphere, draw_skeleton_3d_dynamic_with_object, generate_cube, draw_cube_2d
-from data import extract_pts2d, normalize_pts_to_frame, load_data_batch_v1, load_data_batch_v2, load_data_batch_v3
 import copy
+from model import (
+	Params,
+	JointRecNet_v3,
+	JointRecNet_v2,
+	JointRecNet,
+	JointRecNet_batch,
+	JointRecNet_v2_big,
+	JointRecNet_big
+)
+from visualization import (
+	draw_skeleton_3d,
+	draw_skeleton_2d,
+	draw_skeleton_3d_dynamic,
+	generate_fibonacci_sphere,
+	transform_sphere,
+	draw_skeleton_3d_with_sphere,
+	draw_skeleton_3d_dynamic_with_object,
+	generate_cube, 
+	draw_cube_2d
+)
+from data import (
+	extract_pts2d, 
+	normalize_pts_to_frame, 
+	load_data_batch_v1, 
+	load_data_batch_v2, 
+	load_data_batch_v3
+)
+
 
 # create_model = JointRecNet_v3.create_model
 # create_model = JointRecNet_v2.create_model
@@ -271,8 +296,8 @@ if __name__ == '__main__':
 	# X = load_data_batch_v2(shuffle=False)
 	X = load_data_batch_v3(shuffle=False, target='person_8/light-100_temp-5600/garments_1/freestyle')
 
-	model_path = '/home/darkalert/KazendiJob/DLab/net-reconstruction-3d/models/v2-big-norm-weighted-mse0.0008937817183323205.pth'
-	result_dir = '/home/darkalert/KazendiJob/DLab/net-reconstruction-3d/test/v2-big-norm-weighted-mse_cube_2/'
+	model_path = '/home/darkalert/KazendiJob/DLab/multi-view-pose-3d/models/v2-big-norm-weighted-mse0.0008937817183323205.pth'
+	result_dir = '/home/darkalert/KazendiJob/DLab/multi-view-pose-3d/test/v2-big-norm-weighted-mse_cube_2/'
 
 
 	# test(model_path, X, result_dir, sample_idx=1780)
@@ -288,7 +313,7 @@ if __name__ == '__main__':
 
 
 	elev, azim = -80, -21
-	axis = [-0.025, 0.025]
+	axis = [-0.015, 0.015]
 	# test_shpere(model_path, X, sample_idx=111)
 	test_3d_dynamic_with_object(model_path, X, start_idx=0, stop_idx=X.shape[0], result_dir=None, elev=elev, azim=azim, axis=axis, object_type='cube')
 
